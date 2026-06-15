@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NeoBet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>🎮 NeoBet</h1>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="#games" class="nav-link">Games</a></li>
+                <li class="nav-item"><a href="#deposit" class="nav-link">Deposit</a></li>
+                <li class="nav-item"><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-card">
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <h3 id="username">User</h3>
+                    <p id="userEmail">user@example.com</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="#" class="sidebar-link active" data-section="dashboard">📊 Dashboard</a>
+                <a href="#" class="sidebar-link" data-section="games">🎮 Games</a>
+                <a href="#" class="sidebar-link" data-section="deposit">💰 Deposit</a>
+                <a href="#" class="sidebar-link" data-section="history">📜 History</a>
+                <a href="#" class="sidebar-link" data-section="settings">⚙️ Settings</a>
+                <hr>
+                <a href="#" class="sidebar-link" onclick="logout()">🚪 Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <h1>Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💵</div>
+                        <div class="stat-info">
+                            <h3>Balance</h3>
+                            <p id="balance" class="stat-value">$0.00</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <h3>Total Bets</h3>
+                            <p id="totalBets" class="stat-value">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>Won Bets</h3>
+                            <p id="wonBets" class="stat-value">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-info">
+                            <h3>Lost Bets</h3>
+                            <p id="lostBets" class="stat-value">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Games Section -->
+            <section id="games" class="content-section">
+                <h1>Available Games</h1>
+                <div id="gamesList" class="games-grid"></div>
+            </section>
+
+            <!-- Deposit Section -->
+            <section id="deposit" class="content-section">
+                <h1>Deposit Funds</h1>
+                <div class="deposit-card card">
+                    <form id="depositForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input
+                                type="number"
+                                id="amount"
+                                name="amount"
+                                class="form-input"
+                                placeholder="Enter amount (min 100)"
+                                min="100"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select id="paymentMethod" name="paymentMethod" class="form-input" required>
+                                <option value="">Select payment method</option>
+                                <option value="credit_card">Credit Card</option>
+                                <option value="debit_card">Debit Card</option>
+                                <option value="bank_transfer">Bank Transfer</option>
+                                <option value="paypal">PayPal</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="form-label">Description (Optional)</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                class="form-input"
+                                placeholder="Add any notes"
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Request Deposit
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="content-section">
+                <h1>Transaction History</h1>
+                <div id="historyList" class="history-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Load user data on page load
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+
+        // Setup section navigation
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = e.target.dataset.section;
+                if (section) showSection(section);
+            });
+        });
+
+        // Setup deposit form
+        document.getElementById('depositForm').addEventListener('submit', handleDeposit);
+    </script>
+</body>
+</html>
